@@ -1,0 +1,93 @@
+{
+  "name": "{{project}}",
+  "version": "0.1.0",
+  "description": "{{desc}}",
+  "main": "src/index.js",{{if asAPI}}
+  "types": "types/index.d.ts",
+  "typings": "types/index.d.ts",{{/if}}
+  "bin": {
+    "{{cmd}}": "./bin/index.js"
+  },
+  "man": "./man/doc.1",
+  "engines": {
+    "node": ">=10.9.0"
+  },
+  "scripts": {
+    "lint": "eslint src bin{{if hasTest}} test{{/if}}",
+    "format": "prettier --config .prettierrc.js --write {{if hasTest}}{src,bin,test}/**/*.js{{else}}{src,bin}/**/*.js{{/if}}",
+    "inspect": "jsinspect src bin"{{if hasTest}},
+    "test": "nyc ava -v",
+    "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s",
+    "coverage": "nyc report --reporter=text-lcov > coverage.lcov && codecov",
+    "report": "nyc report --reporter=html"{{/if}}{{if hasTest}},
+    "prepare": "npm test"{{/if}}
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/{{author}}/{{project}}.git"
+  },
+  "keywords": [{{each keywords $kwd $idx}}
+    "{{@$kwd}}"{{if $idx != keywords.length - 1}},{{/if}}{{/each}}
+  ],
+  "author": "{{author}}",
+  "license": "GPL-3.0",
+  "bugs": {
+    "url": "https://github.com/{{author}}/{{project}}/issues"
+  },
+  "homepage": "https://github.com/{{author}}/{{project}}#readme",
+  "files": [
+    "bin",
+    "src",
+    "man",
+    "docs"{{if asAPI}},
+    "types"{{/if}}
+  ],
+  "lint-staged": {
+    "*.js": ["eslint"]
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"{{if !hasTravis&&hasTest}},
+      "pre-push": "npm test"{{/if}}
+    }
+  },{{if hasTest}}
+  "ava": {
+    "cache": true,
+    "babel": false
+  },
+  "nyc": {
+    "cache": true,
+    "include": [
+      "src/**/*.js",
+      "bin/**/*.js"
+    ]
+  },{{/if}}
+  "devDependencies": { {{if hasTest}}
+    "ava": "^1.2.1",
+    "codecov": "^3.2.0",{{/if}}
+    "conventional-changelog-cli": "^2.0.12",
+    "cz-conventional-changelog": "^2.1.0",
+    "eslint": "^5.14.0",
+    "eslint-plugin-prettier": "^3.0.1",
+    "husky": "^1.3.1",
+    "jsinspect": "^0.12.7",
+    "lint-staged": "^8.1.4",{{if hasTest}}
+    "nyc": "^13.3.0",{{/if}}
+    "prettier": "^1.16.4"
+  },
+  "dependencies": {
+    "chalk": "^2.4.1",
+    {{each dependencies $pkg}}{{@$pkg}},
+    {{/each}}"figlet": "^1.2.0",
+		"figures": "^2.0.0",
+    "ora": "^3.0.0",
+    "semver": "^5.5.1",
+    "yargonaut": "^1.1.3",
+    "yargs": "^12.0.0"
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
+  }
+}
