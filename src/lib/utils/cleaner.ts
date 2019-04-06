@@ -1,6 +1,4 @@
-'use strict';
-
-const cleaner = {
+export default {
 	state: [],
 	setState() {
 		console.log('收集要清理的内容');
@@ -9,5 +7,3 @@ const cleaner = {
 		console.log('todo');
 	}
 };
-
-module.exports = cleaner;

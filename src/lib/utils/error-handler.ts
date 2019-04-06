@@ -1,10 +1,10 @@
-'use strict';
-const chalk = require('chalk');
-const ora = require('ora');
-const {logger, cleaner} = require('./index');
+import chalk from 'chalk';
+import ora from 'ora';
+import { logger, cleaner } from './index';
+
 
 // 尽量不要用async函数来做最终的异常处理
-async function handleSignal() {
+async function handleSignal(): Promise<void> {
 	const spiner = ora('do clean up...\n').start();
 	try {
 		await cleaner.cleanup();
@@ -13,19 +13,30 @@ async function handleSignal() {
 		logger.error(`Clean up failed. Error message: ${e.message}`);
 		console.error(chalk.red(e.stack));
 		process.exit(1);
+		return;
 	}
 	process.exit();
 }
 
+interface CustomError {
+	msg: string;
+	stack: string;
+}
+
+function isCustomError(e: any): e is CustomError {
+	return !!e.msg;
+}
+
 // 尽量不要用async函数来做最终的异常处理
-async function handleError(e) {
-	if (e.msg) {
+async function handleError(e: Error | CustomError): Promise<any> {
+	if (isCustomError(e)) {
 		logger.error(e.msg);
 	} else {
 		logger.error(e.message);
 	}
-	console.error(chalk.red(e.stack));
 
+	console.error(chalk.red(e.stack as string));
+	
 	const spiner = ora('do clean up...\n').start();
 	try {
 		await cleaner.cleanup();
@@ -37,7 +48,4 @@ async function handleError(e) {
 	process.exit(1);
 }
 
-
-exports.handleError = handleError;
-
-exports.handleSignal = handleSignal;
+export { handleError, handleSignal };

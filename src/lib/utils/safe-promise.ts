@@ -1,9 +1,7 @@
-'use strict';
-
 const event = 'unhandledRejection';
 
-function registerHandler(event) {
-	process.addListener(event, reason => {
+function registerHandler(event: 'unhandledRejection'): void {
+	process.addListener(event, (reason: any): void | never => {
 		if (reason instanceof Error) {
 			throw reason;
 		} else {

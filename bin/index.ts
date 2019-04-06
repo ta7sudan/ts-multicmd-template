@@ -1,13 +1,11 @@
 #!/usr/bin/env node
-'use strict';
+import * as semver from 'semver';
+import { logger, getCmds } from '../src/lib/utils';
+import { engines } from '../package.json';
 
-const semver = require('semver');
-const {logger, getCmds} = require('../src/lib/utils');
-const {
-	engines: {node: wanted}
-} = require('../package');
+const { node: wanted } = engines;
 
-function checkNodeVersion(wanted, cliName) {
+function checkNodeVersion(wanted: string, cliName: string): void {
 	const curNodeVersion = process.version;
 	if (!semver.satisfies(curNodeVersion, wanted)) {
 		logger.error(
@@ -19,4 +17,4 @@ function checkNodeVersion(wanted, cliName) {
 
 checkNodeVersion(wanted, getCmds()[0]);
 
-require('../src/index');
+require('../src');

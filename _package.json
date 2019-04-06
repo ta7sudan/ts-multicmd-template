@@ -3,24 +3,26 @@
   "version": "0.1.0",
   "description": "{{desc}}",
   "main": "src/index.js",{{if asAPI}}
-  "types": "types/index.d.ts",
-  "typings": "types/index.d.ts",{{/if}}
+  "types": "types/todo.d.ts",
+  "typings": "types/todo.d.ts",{{/if}}
   "bin": {
-    "{{cmd}}": "./bin/index.js"
+    "{{cmd}}": "./dist/bin/index.js"
   },
   "man": "./man/doc.1",
   "engines": {
-    "node": ">=10.9.0"
+    "node": ">=10.0.0"
   },
   "scripts": {
-    "lint": "eslint src bin{{if hasTest}} test{{/if}}",
-    "format": "prettier --config .prettierrc.js --write {{if hasTest}}{src,bin,test}/**/*.js{{else}}{src,bin}/**/*.js{{/if}}",
+    "build": "tsc",
+    "prebuild": "rimraf dist types",
+    "lint": "tslint -p tsconfig.json && eslint src bin{{if hasTest}} test{{/if}}",
+    "format": "prettier --config .prettierrc.js --write {{if hasTest}}{src,bin,test}/**/*.{js,ts}{{else}}{src,bin}/**/*.{js,ts}{{/if}}",
     "inspect": "jsinspect src bin"{{if hasTest}},
-    "test": "nyc ava -v",
-    "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s",
+    "test": "tsc --outDir test_cache && nyc ava -v",
     "coverage": "nyc report --reporter=text-lcov > coverage.lcov && codecov",
-    "report": "nyc report --reporter=html"{{/if}}{{if hasTest}},
-    "prepare": "npm test"{{/if}}
+    "report": "nyc report --reporter=html"{{/if}},
+    "prepare": "{{if hasTest}}npm test && {{/if}}npm run build",
+    "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s"
   },
   "repository": {
     "type": "git",
@@ -36,18 +38,27 @@
   },
   "homepage": "https://github.com/{{author}}/{{project}}#readme",
   "files": [
-    "bin",
-    "src",
+    "dist",
     "man",
     "docs"{{if asAPI}},
     "types"{{/if}}
   ],
   "lint-staged": {
-    "*.js": ["eslint"]
+    "linters": {
+      "*.js": [
+        "eslint"
+      ],
+      "*.ts": [
+        "tslint"
+      ]
+    },
+    "ignore": [
+      "**/*.d.ts"
+    ]
   },
   "husky": {
     "hooks": {
-      "pre-commit": "lint-staged"{{if !hasTravis&&hasTest}},
+      "pre-commit": "lint-staged && npm run build && git add ."{{if !hasTravis&&hasTest}},
       "pre-push": "npm test"{{/if}}
     }
   },{{if hasTest}}
@@ -58,32 +69,41 @@
   "nyc": {
     "cache": true,
     "include": [
-      "src/**/*.js",
-      "bin/**/*.js"
+      "test_cache/**/*.js"
     ]
   },{{/if}}
-  "devDependencies": { {{if hasTest}}
-    "ava": "^1.2.1",
-    "codecov": "^3.2.0",{{/if}}
+  "devDependencies": {
+    "@types/figlet": "^1.2.0",
+    "@types/figures": "^2.0.0",
+    "@types/node": "^11.13.0",
+    "@types/semver": "^6.0.0",
+    "@types/yargs": "^12.0.11",{{if hasTest}}
+    "ava": "^1.4.1",
+    "codecov": "^3.3.0",{{/if}}
     "conventional-changelog-cli": "^2.0.12",
     "cz-conventional-changelog": "^2.1.0",
-    "eslint": "^5.14.0",
+    "eslint": "^5.16.0",
     "eslint-plugin-prettier": "^3.0.1",
     "husky": "^1.3.1",
     "jsinspect": "^0.12.7",
-    "lint-staged": "^8.1.4",{{if hasTest}}
+    "lint-staged": "^8.1.5",{{if hasTest}}
     "nyc": "^13.3.0",{{/if}}
-    "prettier": "^1.16.4"
+    "prettier": "^1.16.4",
+    "rimraf": "^2.6.3",
+    "tslint": "^5.15.0",
+    "tslint-config-prettier": "^1.18.0",
+    "typescript": "^3.4.2"
   },
   "dependencies": {
-    "chalk": "^2.4.1",
+    "chalk": "^2.4.2",
     {{each dependencies $pkg}}{{@$pkg}},
-    {{/each}}"figlet": "^1.2.0",
-		"figures": "^2.0.0",
-    "ora": "^3.0.0",
-    "semver": "^5.5.1",
-    "yargonaut": "^1.1.3",
-    "yargs": "^12.0.0"
+    {{/each}}"figlet": "^1.2.1",
+    "figures": "^2.0.0",
+    "ora": "^3.4.0",
+    "semver": "^6.0.0",
+    "tslib": "^1.9.3",
+    "yargonaut": "^1.1.4",
+    "yargs": "^13.0.0-candidate.0"
   },
   "config": {
     "commitizen": {

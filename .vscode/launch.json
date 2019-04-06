@@ -8,7 +8,7 @@
 			"type": "node",
 			"request": "launch",
 			"name": "Debug TODO",
-			"program": "${workspaceFolder}/bin/index.js",
+			"program": "${workspaceFolder}/dist/bin/index.js",
 			"args": [
 				"TODO"
 			]
