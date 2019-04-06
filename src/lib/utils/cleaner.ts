@@ -1,9 +1,9 @@
 export default {
 	state: [],
-	setState() {
+	setState(): void {
 		console.log('收集要清理的内容');
 	},
-	async cleanup() {
+	async cleanup(): Promise<void> {
 		console.log('todo');
 	}
 };

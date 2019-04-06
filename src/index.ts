@@ -1,6 +1,6 @@
 import './lib/utils/safe-promise';
 
-import yargs from 'yargs';
+import yargs, { Argv } from 'yargs';
 import yargonaut from 'yargonaut';
 import chalk from 'chalk';
 import { version, author } from '../package.json';
@@ -16,7 +16,7 @@ process.addListener('SIGINT', handleSignal);
 process.addListener('SIGTERM', handleSignal);
 process.addListener('uncaughtException', handleError);
 
-(async () => {
+(async (): Promise<void> => {
 	const cmdName = getCmds()[0],
 		logo = await getFiglet(cmdName);
 	(yargs as any).logo = logo;
@@ -41,7 +41,8 @@ process.addListener('uncaughtException', handleError);
 		.help()
 		// 尽量不要用async函数, 不过这里用用也没事
 		// MMP第三方的types这里类型少一个参数
-		.fail((async (msg: string, err: Error, yargs: yargs.Argv) => {
+		// tslint:disable-next-line
+		.fail((async (msg: string, err: Error, yargs: Argv): Promise<void> => {
 			// 这个坑爹东西会捕获掉所有同步异常, 子命令的fail还会向上一级命令的fail冒泡
 			if (err) {
 				await handleError(err);

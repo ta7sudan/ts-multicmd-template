@@ -1,4 +1,4 @@
-const event = 'unhandledRejection';
+const eventName = 'unhandledRejection';
 
 function registerHandler(event: 'unhandledRejection'): void {
 	process.addListener(event, (reason: any): void | never => {
@@ -10,6 +10,6 @@ function registerHandler(event: 'unhandledRejection'): void {
 	});
 }
 
-if (process.listenerCount(event) === 0) {
-	registerHandler(event);
+if (process.listenerCount(eventName) === 0) {
+	registerHandler(eventName);
 }

@@ -1,10 +1,10 @@
 import { getCmds } from '../lib/utils';
-import yargs = require('yargs');
+import { Argv, Arguments } from 'yargs';
 
 const create = {
 	command: 'todo <required> [options]',
 	desc: 'TODO',
-	builder(yargs: yargs.Argv) {
+	builder(yargs: Argv): Argv {
 		return yargs
 			.option('t', {
 				alias: 'TODO',
@@ -17,7 +17,7 @@ const create = {
 				'TODO'
 			);
 	},
-	handler(argv: yargs.Arguments) {
+	handler(argv: Arguments): void {
 		console.log('TODO', argv);
 	}
 };

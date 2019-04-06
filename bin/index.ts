@@ -3,7 +3,7 @@ import * as semver from 'semver';
 import { logger, getCmds } from '../src/lib/utils';
 import { engines } from '../package.json';
 
-const { node: wanted } = engines;
+const { node: nodeVersion } = engines;
 
 function checkNodeVersion(wanted: string, cliName: string): void {
 	const curNodeVersion = process.version;
@@ -15,6 +15,6 @@ function checkNodeVersion(wanted: string, cliName: string): void {
 	}
 }
 
-checkNodeVersion(wanted, getCmds()[0]);
+checkNodeVersion(nodeVersion, getCmds()[0]);
 
 require('../src');
