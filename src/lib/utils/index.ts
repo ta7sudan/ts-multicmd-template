@@ -1,12 +1,12 @@
 import figlet from 'figlet';
-import path from 'path';
+import { resolve } from 'path';
 import os from 'os';
 import pkg from '../../../package.json';
 import cleaner from './cleaner';
 import * as logger from './logger';
 
 
-const TODO_DIR = path.resolve(os.homedir(), '.todo');
+const TODO_DIR = resolve(os.homedir(), '.todo');
 
 type PromiseData = [undefined, any];
 
@@ -22,7 +22,7 @@ export const to = (p: Promise<any>): Promise<PromiseData | PromiseError> => p.th
 
 export const sleep = (time: number): Promise<any> => new Promise<any>((rs: any): any => setTimeout(rs, time));
 
-export const getAbsolutePath = (rel: string): string => path.resolve(process.cwd(), rel);
+export const getAbsolutePath = (rel: string): string => resolve(process.cwd(), rel);
 
 export const getCmds = (): string[] => Object.keys(pkg.bin);
 

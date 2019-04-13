@@ -62,4 +62,6 @@ typings/
 
 coverage.lcov
 .rpt2_cache
-test_cache
+test_cache{{if hasTravis}}
+dist
+types{{/if}}

@@ -15,6 +15,7 @@
   "scripts": {
     "build": "tsc",
     "prebuild": "rimraf dist types",
+    "dev": "tsc --watch",
     "lint": "tslint -p tsconfig.json && eslint src bin{{if hasTest}} test{{/if}}",
     "format": "prettier --config .prettierrc.js --write {{if hasTest}}{src,bin,test}/**/*.{js,ts}{{else}}{src,bin}/**/*.{js,ts}{{/if}}",
     "inspect": "jsinspect src bin"{{if hasTest}},
@@ -58,7 +59,7 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "lint-staged && npm run build && git add ."{{if !hasTravis&&hasTest}},
+      "pre-commit": "lint-staged {{if !hasTravis}} && npm run build {{/if}}&& git add ."{{if !hasTravis&&hasTest}},
       "pre-push": "npm test"{{/if}}
     }
   },{{if hasTest}}
