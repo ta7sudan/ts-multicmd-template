@@ -4,10 +4,10 @@ import { logger, cleaner } from './index';
 
 
 // 尽量不要用async函数来做最终的异常处理
-async function handleSignal(): Promise<void> {
+async function handleSignal(signal: string): Promise<void> {
 	const spiner = ora('do clean up...\n').start();
 	try {
-		await cleaner.cleanup();
+		await cleaner.cleanup(signal);
 		spiner.succeed('Exiting without error.');
 	} catch (e) {
 		logger.error(`Clean up failed. Error message: ${e.message}`);
