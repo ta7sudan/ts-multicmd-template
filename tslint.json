@@ -6,6 +6,7 @@
 	],
 	"jsRules": {},
 	"rules": {
+		"semicolon": [true, "always", "ignore-interfaces"],
 		"ordered-imports": false,
 		"no-var-requires": false,
 		"no-console": false,
