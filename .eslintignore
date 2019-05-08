@@ -1,4 +1,4 @@
 .eslintrc.js
 .prettierrc.js
-example/**/*.js
 dist/**/*.js
+example/**/*.js
