@@ -1,4 +1,4 @@
-import * as figures from 'figures';
+import figures from 'figures';
 import chalk from 'chalk';
 
 export const error = (msg: string): void => console.error(chalk.red(`${figures.cross} ${msg}`));
