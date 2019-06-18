@@ -1,10 +1,13 @@
 import { getCmds } from '../lib/utils';
-import { Argv, Arguments } from 'yargs';
+import { Argv, Arguments, CommandModule } from 'yargs';
 
-const create = {
+interface MArguments {}
+interface MAlias {}
+
+const todo: CommandModule<MArguments & MAlias, MArguments & MAlias> = {
 	command: 'todo <required> [options]',
 	desc: 'TODO',
-	builder(yargs: Argv): Argv {
+	builder(yargs: Argv<MArguments & MAlias>): Argv<MArguments & MAlias> {
 		return yargs
 			.option('t', {
 				alias: 'TODO',
@@ -15,11 +18,15 @@ const create = {
 			.example(
 				`${getCmds()[0]} todo -t`,
 				'TODO'
-			);
+			)
+			.check((argv: Arguments<MArguments>, alias: MAlias): boolean => {
+				return true
+			});
+			;
 	},
-	handler(argv: Arguments): void {
+	handler(argv: Arguments<MArguments & MAlias>): void {
 		console.log('TODO', argv);
 	}
 };
 
-module.exports = create;
+module.exports = todo;
