@@ -16,7 +16,6 @@
     "build": "tsc",
     "dev": "tsc -w",
     "prebuild": "rimraf dist types",
-    "dev": "tsc --watch",
     "lint": "tslint -p tsconfig.json && eslint src bin{{if hasTest}} test{{/if}}",
     "format": "prettier --config .prettierrc.js --write {{if hasTest}}{src,bin,test}/**/*.{js,ts}{{else}}{src,bin}/**/*.{js,ts}{{/if}}",
     "inspect": "jsinspect src bin"{{if hasTest}},
