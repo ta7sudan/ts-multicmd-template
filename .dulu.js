@@ -117,7 +117,7 @@ module.exports = function (projectName) {
 		complete(answers) {
 			const { hasTest, hasTravis, needNpmrc, asAPI } = answers,
 				excludes = ['.dulu.js'],
-				templates = ['_package.json', 'man/doc.1', 'README.md'],
+				templates = ['_package.json', 'man/doc.1', 'README.md', '.gitignore'],
 				transform = {
 					'_package.json': 'package.json'
 				};
