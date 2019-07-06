@@ -76,22 +76,22 @@
   "devDependencies": {
     "@types/figlet": "^1.2.0",
     "@types/figures": "^3.0.1",
-    "@types/node": "^12.0.8",
-    "@types/semver": "^6.0.0",
+    "@types/node": "^12.0.12",
+    "@types/semver": "^6.0.1",
     "@types/yargs": "^13.0.0",{{if hasTest}}
     "ava": "^2.1.0",
     "codecov": "^3.5.0",{{/if}}
     "conventional-changelog-cli": "^2.0.21",
     "cz-conventional-changelog": "^2.1.0",
-    "eslint": "^5.16.0",
+    "eslint": "^6.0.1",
     "eslint-plugin-prettier": "^3.1.0",
-    "husky": "^2.4.1",
+    "husky": "^3.0.0",
     "jsinspect": "^0.12.7",
-    "lint-staged": "^8.2.1",{{if hasTest}}
+    "lint-staged": "^9.1.0",{{if hasTest}}
     "nyc": "^14.1.1",{{/if}}
     "prettier": "^1.18.2",
     "rimraf": "^2.6.3",
-    "tslint": "^5.17.0",
+    "tslint": "^5.18.0",
     "tslint-config-prettier": "^1.18.0",
     "typescript": "^3.5.2"
   },
