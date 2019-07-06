@@ -44,19 +44,6 @@
     "docs"{{if asAPI}},
     "types"{{/if}}
   ],
-  "lint-staged": {
-    "linters": {
-      "*.js": [
-        "eslint"
-      ],
-      "*.ts": [
-        "tslint"
-      ]
-    },
-    "ignore": [
-      "**/*.d.ts"
-    ]
-  },
   "husky": {
     "hooks": {
       "pre-commit": "lint-staged {{if !hasTravis}} && npm run build {{/if}}&& git add ."{{if !hasTravis&&hasTest}},
