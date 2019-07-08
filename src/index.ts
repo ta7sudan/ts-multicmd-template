@@ -3,9 +3,9 @@ import './lib/utils/safe-promise';
 import yargs, { Argv } from 'yargs';
 import yargonaut from 'yargonaut';
 import chalk from 'chalk';
-import { version, author } from '../package.json';
 import { handleError, handleSignal } from './lib/utils/error-handler';
 import { getCmds,  getFiglet } from './lib/utils';
+const { version, author } = require('../../package.json');
 
 
 const authorName = typeof author === 'string' ? author : (author as any).name as string;

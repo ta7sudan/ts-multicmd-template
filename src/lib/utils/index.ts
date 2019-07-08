@@ -1,9 +1,9 @@
 import figlet from 'figlet';
 import { resolve } from 'path';
 import os from 'os';
-import pkg from '../../../package.json';
 import cleaner from './cleaner';
 import * as logger from './logger';
+const pkg = require('../../../../package.json');
 
 
 const TODO_DIR = resolve(os.homedir(), '.todo');
