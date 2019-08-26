@@ -46,7 +46,7 @@
   ],
   "husky": {
     "hooks": {
-      "pre-commit": "lint-staged {{if !hasTravis}} && npm run build && git add .{{/if}}"{{if !hasTravis&&hasTest}},
+      "pre-commit": "lint-staged{{if !hasTravis}} && npm run build && git add .{{/if}}"{{if !hasTravis&&hasTest}},
       "pre-push": "npm test"{{/if}}
     }
   },{{if hasTest}}
